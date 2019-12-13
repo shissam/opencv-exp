@@ -143,7 +143,7 @@ quit()
 
 Inspired from [YOLO object detection with OpenCV](https://www.pyimagesearch.com/2018/11/12/yolo-object-detection-with-opencv/)
 
-## Pull/copy/whatever All the test images and models and unpack
+### Pull/copy/whatever All the test images and models and unpack
 
 ```
 cd ~/Downloads
@@ -156,7 +156,7 @@ unzip ../../arlopics.zip
 cd ../..
 ```
 
-## Run a quick test
+### Run a quick test
 
 Remember... virtualenv! 
 
@@ -176,7 +176,7 @@ cp <<SRC>>/yolo.py .
 python yolo.py --image images/baggage_claim.jpg --yolo yolo-coco -n -s
 ```
 
-## Predefined Scripts for Yolo
+### Predefined Scripts for Yolo
 
 ```
 workon cv400
@@ -269,14 +269,14 @@ Like before:
 
 Inspired from [Object detection with deep learning and OpenCV](https://www.pyimagesearch.com/2017/09/11/object-detection-with-deep-learning-and-opencv/) For comparison with OpenCV and the SSD Algorithm.
 
-## Unpack the SSD Detection tools (copied earlier with the YOLO unpacking)
+### Unpack the SSD Detection tools (copied earlier with the YOLO unpacking)
 
 ```
 cd ~/Downloads
 unzip object-detection-deep-learning.zip
 ```
 
-## Run a quick test
+### Run a quick test
 
 Remember... virtualenv! 
 
@@ -302,7 +302,7 @@ python deep_learning_object_detection.py \
     --image images/example_01.jpg -n -s
 ```
 
-## Predefined Scripts for SSD
+### Predefined Scripts for SSD
 
 ```
 workon cv400  # if not already
