@@ -14,7 +14,7 @@ Following from [How to install OpenCV 4 on Ubuntu](https://www.pyimagesearch.com
 
 ## Diskspace
 
-As stated above w.r.t. the assumption, following these instructions required approximately $((30461704-19183108))+$((31274772-30461704)) bytes or 11.6GB of space before experiments.
+As stated above w.r.t. the assumption, following these instructions required approximately 11.6GB of space before experiments.
 ## Baseline Ubuntu/Linux package installations via ```apt-get```
 
 ```
@@ -137,7 +137,7 @@ cv2.__version__
 quit()
 ```
 
-# Get To Work $((31274772-30461704))
+# Get To Work
 
 ## YOLO Experiments
 
@@ -149,13 +149,14 @@ Inspired from [YOLO object detection with OpenCV](https://www.pyimagesearch.com/
 cd ~/Downloads
 cp <<SRC>>/*.zip .
 unzip yolo-object-detection.zip
-unzip object-detection-deep-learning.zip
 cd yolo-object-detection/images/
 unzip ../../objDetect.zip
 unzip ../../bccpics.zip
 unzip ../../arlopics.zip
 cd ../..
 ```
+
+## Run a quick test
 
 Remember... virtualenv! 
 
@@ -166,7 +167,8 @@ python yolo.py --image images/baggage_claim.jpg --yolo yolo-coco
 ```
 
 You should have your first successful object detection result displayed.
-The ```yolo.py``` program was modified to add additional command line args to run in batch mode while providing textual output as to the object detected and the confidence score. Replace that version of ```yolo.py``` with the modified one and re-run the same example with the args '-n' (non-interactve) and '-s' save resulting image.
+
+The ```yolo.py``` program was modified to add additional command line args to run in batch mode while providing textual output as to the object detected and the confidence score. Replace that version of ```yolo.py``` with the modified one and re-run the same example with the args '-n' (non-interactve) and '-s' to save resulting image.
 
 ```
 mv yolo.py yolo_orig.py
@@ -174,7 +176,170 @@ cp <<SRC>>/yolo.py .
 python yolo.py --image images/baggage_claim.jpg --yolo yolo-coco -n -s
 ```
 
+## Predefined Scripts for Yolo
+
+```
+workon cv400
+cd ~/Downloads/yolo-object-detection
+cp <<SRC>>/yolo_game_run.sh .
+bash ./yolo_game_run.sh | tee yolo-game-run.txt  # takes about 1 min.
+```
+
+compare your results with those from the baseline set (a regression test)
+
+```
+ls -l yolo-game-run.txt /tmp/testyologame.txt
+diff yolo-game-run.txt /tmp/testyologame.txt   # shows time differences
+#
+# ignores time difference
+#
+diff yolo-game-run.txt /tmp/testyologame.txt \
+  | egrep -v \
+    "(took\ [[:digit:]]\.[[:digit:]].*\ seconds|---|^[[:digit:]][[:digit:]]*c)"
+```
+
+* times should be different (expected)
+* confidence should not be different (expected)
+* number of objects detected should not be different (expected)
+
+Look at the output:
+
+```
+head -19 yolo-game-run.txt
+[INFO] loading YOLO from disk...
+[INFO] images/game01.jpg: YOLO took 1.606051 seconds
+[INFO] images/game01.jpg: person: 0.9992
+[INFO] images/game01.jpg: person: 0.9946
+[INFO] saving detection image as output/yolo_game01.jpg
+[INFO] loading YOLO from disk...
+[INFO] images/game02.jpg: YOLO took 1.592636 seconds
+[INFO] images/game02.jpg: person: 0.9987
+[INFO] saving detection image as output/yolo_game02.jpg
+[INFO] loading YOLO from disk...
+[INFO] images/game03.jpg: YOLO took 1.584641 seconds
+[INFO] images/game03.jpg: person: 0.9921
+[INFO] images/game03.jpg: person: 0.9918
+[INFO] saving detection image as output/yolo_game03.jpg
+[INFO] loading YOLO from disk...
+[INFO] images/game04.jpg: YOLO took 1.595009 seconds
+[INFO] images/game04.jpg: person: 0.9966
+[INFO] images/game04.jpg: backpack: 0.7760
+[INFO] saving detection image as output/yolo_game04.jpg
+```
+
+for ```game01.jpg``` 2 persons (with high confidence) were detected in the image
+
+for ```game02.jpg``` 1 person (with high confidence) was detected
+
+for ```game03.jpg``` 2 persons were detected
+
+for ```game04.jpg``` 1 person and one backpack were detected
+
+for each image, the output marked-up image from the detection is saved for verification.
+
+(you get the drift...)
+
+Another experiment set:
+
+```
+cp <<SRC>>/yolo_bcc_run.sh
+bash ./yolo_bcc_run.sh | tee yolo-bcc-run.txt  # takes about 3 min.
+```
+
+compare your results with those from the baseline set (a regression test)
+
+```
+ls -l yolo-bcc-run.txt /tmp/testyolobcc.txt
+diff yolo-bcc-run.txt /tmp/testyolobcc.txt   # shows time differences
+#
+# ignores time difference
+#
+diff yolo-bcc-run.txt /tmp/testyolobcc.txt \
+  | egrep -v \
+    "(took\ [[:digit:]]\.[[:digit:]].*\ seconds|---|^[[:digit:]][[:digit:]]*c)"
+```
+
+Like before:
+* times should be different (expected)
+* confidence should not be different (expected)
+* number of objects detected should not be different (expected)
+
+
 ## SSD Experiments
 
 Inspired from [Object detection with deep learning and OpenCV](https://www.pyimagesearch.com/2017/09/11/object-detection-with-deep-learning-and-opencv/) For comparison with OpenCV and the SSD Algorithm.
+
+## Unpack the SSD Detection tools (copied earlier with the YOLO unpacking)
+
+```
+cd ~/Downloads
+unzip object-detection-deep-learning.zip
+```
+
+## Run a quick test
+
+Remember... virtualenv! 
+
+```
+workon cv400 #if not already in 'cv400'
+cd ~/Downloads/object-detection-deep-learning/
+python deep_learning_object_detection.py \
+    --prototxt MobileNetSSD_deploy.prototxt.txt \
+    --model MobileNetSSD_deploy.caffemodel \
+    --image images/example_01.jpg 
+```
+
+You should have your first successful object detection result displayed.
+
+Like before, the ```deep_learning_object_detection.py``` program was modified to add additional command line args to run in batch mode while providing textual output as to the object detected and the confidence score. Replace that version of ```deep_learning_object_detection.py``` with the modified one and re-run the same example with the args '-n' (non-interactve) and '-s' to save resulting image.
+
+```
+mv deep_learning_object_detection.py deep_learning_object_detection_orig.py
+cp <<SRC>>/deep_learning_object_detection.py .
+python deep_learning_object_detection.py \
+    --prototxt MobileNetSSD_deploy.prototxt.txt \
+    --model MobileNetSSD_deploy.caffemodel \
+    --image images/example_01.jpg -n -s
+```
+
+## Predefined Scripts for SSD
+
+```
+workon cv400  # if not already
+cd ~/Downloads/object-detection-deep-learning
+cp <<SRC>>/ssd_game_run.sh .
+bash ./ssd_game_run.sh | tee ssd-game-run.txt  # takes about 18 sec.
+```
+
+compare your results with those from the baseline set (a regression test)
+
+```
+ls -l ssd-game-run.txt /tmp/testssdgame.txt
+diff ssd-game-run.txt /tmp/testssdgame.txt   # there are no times to diff
+```
+
+* (in this case, time to detect is not displayed -- could be added)
+* confidence should not be different (expected)
+* number of objects detected should not be different (expected)
+
+The other experiment set:
+
+```
+cp <<SRC>>/ssd_bcc_run.sh
+bash ./ssd_bcc_run.sh | tee ssd-bcc-run.txt  # takes about 55 sec.
+```
+
+compare your results with those from the baseline set (a regression test)
+
+```
+ls -l ssd-bcc-run.txt /tmp/testssdbcc.txt
+diff ssd-bcc-run.txt /tmp/testssdbcc.txt   # there are no times to diff
+```
+
+Like before:
+* (in this case, time to detect is not displayed -- could be added)
+* confidence should not be different (expected)
+* number of objects detected should not be different (expected)
+
+Sadly, in this set, SSD was unable to detect any objects (unlike Yolo).
 
