@@ -113,7 +113,10 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 	-D BUILD_EXAMPLES=ON ..
 ```
 
+Noticed this, but does not appear to be a problem as regression tests passed.
+```
 Could NOT find PythonInterp: Found unsuitable version "1.4", but required is at least "2.7" (found /home/hissam/.virtualenvs/cv/bin/python)
+```
 
 ## Build OpenCV and Install (takes about 40 minutes)
 
