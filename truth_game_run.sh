@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cat << TESTTRUTH > /tmp/testtruth.txt
+cat << TESTTRUTH > /tmp/test_game_truth.txt
 [INFO] images/game01.jpg: person: 0.9992
 [INFO] images/game01.jpg: person: 0.9946
 [INFO] images/game02.jpg: person: 0.9987
