@@ -10,6 +10,7 @@ import argparse
 import time
 import cv2
 import os
+import sys
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -39,6 +40,8 @@ flags = ap.parse_args()
 #else:
 #	print("do INTERACTIVE")
 #print("Check that flags.noninteractive=" + str(flags.noninteractive) + " is always a bool")
+
+syscode = 0
 
 # load the COCO class labels our YOLO model was trained on
 labelsPath = os.path.sep.join([args["yolo"], "coco.names"])
@@ -135,6 +138,7 @@ if len(idxs) > 0:
 		cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX,
 			0.5, color, 2)
 		print("[INFO] {}: {}".format(args["image"], text))
+                syscode += 1
 
 # show the output image
 if flags.saveimage:
@@ -147,3 +151,5 @@ if flags.noninteractive:
 else:
 	cv2.imshow("Image", image)
 	cv2.waitKey(0)
+
+sys.exit(syscode)
