@@ -176,7 +176,7 @@ The ```yolo.py``` program was modified to add additional command line args to ru
 ```
 mv yolo.py yolo_orig.py
 cp <<SRC>>/yolo.py .
-python yolo.py --image images/baggage_claim.jpg --yolo yolo-coco -n -s
+python yolo.py --image images/baggage_claim.jpg --yolo yolo-coco -n -s output
 ```
 
 ### Predefined Scripts for Yolo
@@ -302,7 +302,7 @@ cp <<SRC>>/deep_learning_object_detection.py .
 python deep_learning_object_detection.py \
     --prototxt MobileNetSSD_deploy.prototxt.txt \
     --model MobileNetSSD_deploy.caffemodel \
-    --image images/example_01.jpg -n -s
+    --image images/example_01.jpg -n -s output
 ```
 
 ### Predefined Scripts for SSD
