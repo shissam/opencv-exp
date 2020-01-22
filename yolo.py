@@ -25,9 +25,8 @@ ap.add_argument("-t", "--threshold", type=float, default=0.3,
 ap.add_argument("-n", "--noninteractive", default=False,
 	action="store_true",
 	help="run non-interactive (no image viewing)")
-ap.add_argument("-s", "--saveimage", default=False,
-	action="store_true",
-	help="save image dection to file")
+ap.add_argument("-s", "--saveimage", required=False,
+	help="path to save image dection to file (prefixed with 'y_')")
 #
 # original code used a dict-like views of args
 args = vars(ap.parse_args())
@@ -142,7 +141,7 @@ if len(idxs) > 0:
 
 # show the output image
 if flags.saveimage:
-	simg = "output/" + "yolo_" + os.path.basename(args["image"])
+	simg = os.path.abspath(args["saveimage"]) + "/y_" + os.path.basename(args["image"])
 	print ("[INFO] saving detection image as {}".format(simg))
 	cv2.imwrite ( simg, image )
 
